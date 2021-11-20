@@ -24,3 +24,14 @@ services:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_DATABASE}
     command: -p ${DB_PORT}
+
+  database_test:
+    container_name: database_test
+    image: postgres:latest
+    ports:
+      - ${DB_TEST_PORT}:${DB_TEST_PORT}
+    environment:
+      - POSTGRES_USER=${DB_TEST_USERNAME}
+      - POSTGRES_PASSWORD=${DB_TEST_PASSWORD}
+      - POSTGRES_DB=${DB_TEST_DATABASE}
+    command: -p ${DB_TEST_PORT}

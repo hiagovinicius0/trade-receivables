@@ -13,3 +13,8 @@ services:
     extends:
       file: ./containers/api.compose.yml
       service: database
+
+  database_test:
+    extends:
+      file: ./containers/api.compose.yml
+      service: database_test
