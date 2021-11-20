@@ -6,6 +6,6 @@ export interface Bill extends DateColumns {
   originalAmount: number;
   correctedAmount: number;
   daysOfLate: number;
-  paymentDate: Date;
-  dueDate: Date;
+  paymentDate: string;
+  dueDate: string;
 }

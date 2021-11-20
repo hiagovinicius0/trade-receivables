@@ -26,10 +26,10 @@ export class BillEntity implements Bill {
   daysOfLate: number;
 
   @Column({ type: 'date' })
-  paymentDate: Date;
+  paymentDate: string;
 
   @Column({ type: 'date' })
-  dueDate: Date;
+  dueDate: string;
 
   @CreateDateColumn()
   createdAt: Date;

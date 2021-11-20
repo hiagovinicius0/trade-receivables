@@ -65,13 +65,46 @@ export class BillsService {
   }
 
   async update(id: string, updateBillDto: UpdateBillDto): Promise<Bill> {
-    const bill = await this.findOne(id);
+    const bill = await this.billRepo.findOneOrFail(id);
+
+    if (updateBillDto.originalAmount) {
+      bill.correctedAmount = Math.trunc(
+        this.calculateTax(bill.daysOfLate, updateBillDto.originalAmount) * 100,
+      );
+
+      bill.originalAmount = updateBillDto.originalAmount * 100;
+      delete updateBillDto.originalAmount;
+    }
+
+    if (updateBillDto.paymentDate) {
+      const daysOfLate = this.datesService.differenceBetweenDates(
+        updateBillDto.paymentDate,
+        bill.dueDate,
+      );
+      bill.daysOfLate = daysOfLate;
+      bill.correctedAmount = Math.trunc(
+        this.calculateTax(daysOfLate, bill.originalAmount / 100) * 100,
+      );
+    }
+
+    if (updateBillDto.dueDate) {
+      const daysOfLate = this.datesService.differenceBetweenDates(
+        bill.paymentDate,
+        updateBillDto.dueDate,
+      );
+      bill.daysOfLate = daysOfLate;
+      bill.correctedAmount = Math.trunc(
+        this.calculateTax(daysOfLate, bill.originalAmount / 100) * 100,
+      );
+    }
 
     for (const key in updateBillDto) {
       bill[key] = updateBillDto[key];
     }
 
-    return this.billRepo.save(bill);
+    await this.billRepo.save(bill);
+
+    return this.findOne(id);
   }
 
   async remove(billId: string): Promise<BillIdResponse> {
