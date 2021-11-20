@@ -6,7 +6,7 @@ import {
   IsNumber,
   MaxLength,
 } from 'class-validator';
-import { AddBillDto } from './interfaces/add-bill.dto';
+import { AddBillDto } from '../interfaces/add-bill.dto';
 
 export class CreateBillDto implements AddBillDto {
   @ApiProperty()
@@ -23,5 +23,11 @@ export class CreateBillDto implements AddBillDto {
   @IsNotEmpty()
   @IsISO8601()
   @IsDateString()
-  paymentDate: Date;
+  paymentDate: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsISO8601()
+  @IsDateString()
+  dueDate: string;
 }

@@ -25,8 +25,11 @@ export class BillEntity implements Bill {
   @Column()
   daysOfLate: number;
 
-  @Column()
+  @Column({ type: 'date' })
   paymentDate: Date;
+
+  @Column({ type: 'date' })
+  dueDate: Date;
 
   @CreateDateColumn()
   createdAt: Date;

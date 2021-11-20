@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseService } from './database.services';
 import { BillsModule } from './bills/bills.module';
+import { DatesModule } from './dates/dates.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { BillsModule } from './bills/bills.module';
       inject: [ConfigService],
     }),
     BillsModule,
+    DatesModule,
   ],
 })
 export class AppModule {}

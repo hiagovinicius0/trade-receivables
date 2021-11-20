@@ -14,8 +14,8 @@ import { ApiQuery, ApiTags } from '@nestjs/swagger';
 import { PaginatedOccurrences } from 'src/generics/dtos/paginated-occurrences';
 import { BillsService } from './bills.service';
 import { BillIdResponse } from './constants';
-import { CreateBillDto } from './dto/create-bill.dto';
-import { UpdateBillDto } from './dto/update-bill.dto';
+import { CreateBillDto } from './dto/dtos/create-bill.dto';
+import { UpdateBillDto } from './dto/dtos/update-bill.dto';
 import { Bill } from './models/Bill';
 
 @Controller('bills')
