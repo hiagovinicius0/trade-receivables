@@ -17,14 +17,13 @@ export class BillsService {
   ) {}
   async create(createBillDto: CreateBillDto): Promise<Bill> {
     const daysOfLate = this.datesService.differenceBetweenDates(
-      createBillDto.dueDate,
       createBillDto.paymentDate,
+      createBillDto.dueDate,
     );
     const correctedAmount = Math.trunc(
       this.calculateTax(daysOfLate, createBillDto.originalAmount) * 100,
     );
     const originalAmount = Math.trunc(createBillDto.originalAmount * 100);
-
     const bill = await this.billRepo.save({
       ...createBillDto,
       daysOfLate,
@@ -44,7 +43,6 @@ export class BillsService {
       skip: (page - 1) * perPage,
       take: perPage,
     });
-
     allBills.map((bill) => {
       bill.originalAmount = bill.originalAmount / 100;
       bill.correctedAmount = bill.correctedAmount / 100;
@@ -84,7 +82,7 @@ export class BillsService {
   }
 
   calculateTax(daysOfLate: number, originalAmount: number): number {
-    if (daysOfLate === 1) return originalAmount;
+    if (daysOfLate === 0) return originalAmount;
     let fine = 0;
     let interest = 0;
 

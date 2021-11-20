@@ -9,10 +9,13 @@ export class DatesService {
     return date;
   }
 
-  differenceBetweenDates(pastDate: string, futureDate: string): number {
+  differenceBetweenDates(paymentDate: string, dueDate: string): number {
+    if (new Date(paymentDate).getTime() <= new Date(dueDate).getTime())
+      return 0;
+
     const diff = Math.abs(
-      this.withoutTime(new Date(futureDate)).getTime() -
-        this.withoutTime(new Date(pastDate)).getTime(),
+      this.withoutTime(new Date(dueDate)).getTime() -
+        this.withoutTime(new Date(paymentDate)).getTime(),
     );
     const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
 
