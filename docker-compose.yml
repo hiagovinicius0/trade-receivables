@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  api:
+    extends:
+      file: ./containers/api.compose.yml
+      service: api
+    links:
+      - database
+    depends_on:
+      - database
+
+  database:
+    extends:
+      file: ./containers/api.compose.yml
+      service: database

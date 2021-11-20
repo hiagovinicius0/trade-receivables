@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  api:
+    container_name: api
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    expose:
+      - 3000
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    # command: npm run start:prod association
+
+  database:
+    container_name: database
+    image: postgres:latest
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_DATABASE}
+    command: -p ${DB_PORT}
